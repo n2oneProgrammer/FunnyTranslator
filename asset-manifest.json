@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/FunnyTranslator/static/css/main.89242662.css",
+    "main.js": "/FunnyTranslator/static/js/main.8be0a188.js",
+    "index.html": "/FunnyTranslator/index.html",
+    "main.89242662.css.map": "/FunnyTranslator/static/css/main.89242662.css.map",
+    "main.8be0a188.js.map": "/FunnyTranslator/static/js/main.8be0a188.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.89242662.css",
+    "static/js/main.8be0a188.js"
+  ]
+}
