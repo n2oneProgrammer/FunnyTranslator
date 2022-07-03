@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
+import {Container, Grid} from "@mui/material";
+import TextAreaPanel from "./components/TextAreaPanel/TextAreaPanel";
+import Languages from "./scripts/languages";
 
 function App() {
+  const [sourceLanguage, setSourceLanguage] = useState<string>(Object.values(Languages)[0]);
+  const [targetLanguage, setTargetLanguage] = useState<string>(Object.values(Languages)[0]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <Container maxWidth="lg">
+      <CssBaseline enableColorScheme/>
+      <header>
+        <h1>Funny Translator</h1>
       </header>
-    </div>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}> <TextAreaPanel text={"Source"} language={sourceLanguage}
+                                                  setLanguages={setSourceLanguage}/></Grid>
+        <Grid item xs={12} md={6}> <TextAreaPanel text={"Target"} language={targetLanguage}
+                                                  setLanguages={setTargetLanguage}/></Grid>
+      </Grid>
+    </Container>
   );
 }
 
