@@ -1,5 +1,5 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import Languages from "../../scripts/languages";
+import Languages from "../scripts/languages";
 interface Props{
   language: Languages,
   setLanguage: (newValue: Languages)=>void
@@ -10,7 +10,7 @@ function LanguageSelect({language,setLanguage}:Props) {
   };
   return (
     <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+      <InputLabel id="demo-simple-select-label">Language</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"

@@ -1,7 +1,7 @@
 import {Grid, Paper, TextField} from "@mui/material";
 import React from "react";
-import LanguageSelect from "../LanguageSelect/LanguageSelect";
-import Languages from "../../scripts/languages";
+import LanguageSelect from "./LanguageSelect";
+import Languages from "../scripts/languages";
 
 interface Props {
   text: string,
@@ -11,7 +11,7 @@ interface Props {
   setValue: (newValue: string) => void
 }
 
-function TextAreaPanel({text, language, setLanguages,value,setValue}: Props) {
+function TextAreaPanel({text, language, setLanguages, value, setValue}: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -35,7 +35,7 @@ function TextAreaPanel({text, language, setLanguages,value,setValue}: Props) {
         onChange={handleChange}
         style={{
           width: "100%",
-          marginTop:20
+          marginTop: 20
         }}
       />
     </Paper>

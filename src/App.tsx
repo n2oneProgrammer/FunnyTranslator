@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
 import {Container, Grid} from "@mui/material";
-import TextAreaPanel from "./components/TextAreaPanel/TextAreaPanel";
+import TextAreaPanel from "./components/TextAreaPanel";
 import Languages from "./scripts/languages";
 import multiTranslator from "./scripts/multiTranslator";
+import BottomBar from "./components/BottomBar";
 
 let delayDebounceFn: any = 0;
 
@@ -30,7 +31,7 @@ function App() {
   const changeSourceValue = (value: string) => {
     setSourceValue(value);
     clearTimeout(delayDebounceFn);
-    delayDebounceFn = setTimeout(() => translate(sourceLanguage, targetLanguage, value), 1000);
+    delayDebounceFn = setTimeout(() => translate(sourceLanguage, targetLanguage, value), 400);
   };
 
   return (
@@ -49,6 +50,7 @@ function App() {
                                                   value={targetValue}
                                                   setValue={setTargetValue}/></Grid>
       </Grid>
+      <BottomBar onTranslateButtonClick={()=>translate(sourceLanguage,targetLanguage,sourceValue)}/>
     </Container>
   );
 }
