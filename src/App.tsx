@@ -6,16 +6,17 @@ import TextAreaPanel from "./components/TextAreaPanel";
 import Languages from "./scripts/languages";
 import multiTranslator from "./scripts/multiTranslator";
 import BottomBar from "./components/BottomBar";
+import {useCookies} from "react-cookie";
 
 let delayDebounceFn: any = 0;
 
 function App() {
-  const [sourceLanguage, setSourceLanguage] = useState<Languages>(Object.values(Languages)[0]);
+  const [cookies, setCookie] = useCookies();
+  const [sourceLanguage, setSourceLanguage] = useState<Languages>(cookies['sourceLanguage'] || Object.values(Languages)[0]);
   const [sourceValue, setSourceValue] = useState<string>("");
-  const [targetLanguage, setTargetLanguage] = useState<Languages>(Object.values(Languages)[0]);
+  const [targetLanguage, setTargetLanguage] = useState<Languages>(cookies['targetLanguage'] || Object.values(Languages)[0]);
   const [targetValue, setTargetValue] = useState<string>("");
-
-  const translate = async (source:Languages, target:Languages, text:string) => {
+  const translate = async (source: Languages, target: Languages, text: string) => {
     if (source == null || target == null || text == null) return;
     console.log(source, target, text);
     if (text === "") {
@@ -26,6 +27,8 @@ function App() {
     setTargetValue(result);
   };
   useEffect(() => {
+    setCookie("sourceLanguage", sourceLanguage);
+    setCookie("targetLanguage", targetLanguage);
     translate(sourceLanguage, targetLanguage, sourceValue);
   }, [targetLanguage, sourceLanguage]);
   const changeSourceValue = (value: string) => {
@@ -50,7 +53,7 @@ function App() {
                                                   value={targetValue}
                                                   setValue={setTargetValue}/></Grid>
       </Grid>
-      <BottomBar onTranslateButtonClick={()=>translate(sourceLanguage,targetLanguage,sourceValue)}/>
+      <BottomBar onTranslateButtonClick={() => translate(sourceLanguage, targetLanguage, sourceValue)}/>
     </Container>
   );
 }
