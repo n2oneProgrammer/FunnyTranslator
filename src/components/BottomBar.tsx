@@ -16,6 +16,7 @@ function BottomBar({onTranslateButtonClick}: Props) {
     }
     settings.pathLength = value;
     setPathLength(settings.pathLength);
+    onTranslateButtonClick();
   };
   return (
     <Paper style={{

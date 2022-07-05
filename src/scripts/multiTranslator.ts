@@ -1,12 +1,13 @@
 import Languages from "./languages";
 
 class MultiTranslator {
-  json2string(json:any){
+  json2string(json: any) {
     let result = "";
-    json[0].forEach((row:any)=>result+=row[0]);
+    json[0].forEach((row: any) => result += row[0]);
     return result;
   }
-  async translate(srcLang: Languages, tarLang: Languages, text: string):Promise<string> {
+
+  async translate(srcLang: Languages, tarLang: Languages, text: string): Promise<string> {
     let url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + srcLang + '&tl=' + tarLang + '&dt=t&q=' + encodeURI(text);
     let res = await fetch(url);
     let json = await res.json();
@@ -24,13 +25,15 @@ class MultiTranslator {
       text: result
     }
   }
-  async randomPath (srcLang:Languages,tarLang:Languages, text:string, countLang:number = 10){
+
+  async randomPath(srcLang: Languages, tarLang: Languages, text: string, countLang: number = 10, changeProgress: (v1: number) => void) {
     let lang = srcLang;
     let t = text;
-    for(let i=0;i < countLang;i++){
-      let result = await this.randomTranslate(lang,t);
+    for (let i = 0; i < countLang; i++) {
+      let result = await this.randomTranslate(lang, t);
       lang = result.lang;
       t = result.text;
+      changeProgress((i + 1) / countLang * 100);
     }
     return this.translate(lang, tarLang, t);
   }

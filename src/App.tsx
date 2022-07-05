@@ -15,6 +15,7 @@ function App() {
   const [sourceValue, setSourceValue] = useState<string>("");
   const [targetLanguage, setTargetLanguage] = useState<Languages>(settings.targetLanguage);
   const [targetValue, setTargetValue] = useState<string>("");
+  const [translateProgress, setTranslateProgress] = useState<number | undefined>(undefined);
   const translate = async (source: Languages, target: Languages, text: string) => {
     if (source == null || target == null || text == null) return;
     console.log(source, target, text);
@@ -22,7 +23,7 @@ function App() {
       setTargetValue("");
       return;
     }
-    let result = await multiTranslator.randomPath(source, target, text, settings.pathLength);
+    let result = await multiTranslator.randomPath(source, target, text, settings.pathLength, changeTranslateProgress);
     setTargetValue(result);
   };
   const changeSourceValue = (value: string) => {
@@ -41,7 +42,14 @@ function App() {
     translate(sourceLanguage, value, sourceValue);
     setTargetLanguage(value);
   };
-
+  const changeTranslateProgress = (progress: number) => {
+    if (progress >= 100 || progress < 0) {
+      setTranslateProgress(undefined);
+      return;
+    }
+    console.log(progress, progress >= 100);
+    setTranslateProgress(progress)
+  }
   return (
     <Container maxWidth="lg">
       <CssBaseline enableColorScheme/>
@@ -56,7 +64,10 @@ function App() {
         <Grid item xs={12} md={6}> <TextAreaPanel text={"Target"} language={targetLanguage}
                                                   setLanguages={changeTargetLanguage}
                                                   value={targetValue}
-                                                  setValue={setTargetValue}/></Grid>
+                                                  setValue={setTargetValue}
+                                                  isReadOnly={true}
+                                                  progress={translateProgress}
+        /></Grid>
       </Grid>
       <BottomBar onTranslateButtonClick={() => translate(sourceLanguage, targetLanguage, sourceValue)}/>
     </Container>
