@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
 import {Container, Grid} from "@mui/material";
@@ -6,15 +6,14 @@ import TextAreaPanel from "./components/TextAreaPanel";
 import Languages from "./scripts/languages";
 import multiTranslator from "./scripts/multiTranslator";
 import BottomBar from "./components/BottomBar";
-import {useCookies} from "react-cookie";
+import settings from "./scripts/settings";
 
 let delayDebounceFn: any = 0;
 
 function App() {
-  const [cookies, setCookie] = useCookies();
-  const [sourceLanguage, setSourceLanguage] = useState<Languages>(cookies['sourceLanguage'] || Object.values(Languages)[0]);
+  const [sourceLanguage, setSourceLanguage] = useState<Languages>(settings.sourceLanguage);
   const [sourceValue, setSourceValue] = useState<string>("");
-  const [targetLanguage, setTargetLanguage] = useState<Languages>(cookies['targetLanguage'] || Object.values(Languages)[0]);
+  const [targetLanguage, setTargetLanguage] = useState<Languages>(settings.targetLanguage);
   const [targetValue, setTargetValue] = useState<string>("");
   const translate = async (source: Languages, target: Languages, text: string) => {
     if (source == null || target == null || text == null) return;
@@ -23,18 +22,24 @@ function App() {
       setTargetValue("");
       return;
     }
-    let result = await multiTranslator.randomPath(source, target, text);
+    let result = await multiTranslator.randomPath(source, target, text, settings.pathLength);
     setTargetValue(result);
   };
-  useEffect(() => {
-    setCookie("sourceLanguage", sourceLanguage);
-    setCookie("targetLanguage", targetLanguage);
-    translate(sourceLanguage, targetLanguage, sourceValue);
-  }, [targetLanguage, sourceLanguage]);
   const changeSourceValue = (value: string) => {
     setSourceValue(value);
     clearTimeout(delayDebounceFn);
     delayDebounceFn = setTimeout(() => translate(sourceLanguage, targetLanguage, value), 400);
+  };
+  const changeSourceLanguage = (value: Languages) => {
+    settings.sourceLanguage = value;
+    translate(value, targetLanguage, sourceValue);
+    setSourceLanguage(value);
+
+  };
+  const changeTargetLanguage = (value: Languages) => {
+    settings.targetLanguage = value;
+    translate(sourceLanguage, value, sourceValue);
+    setTargetLanguage(value);
   };
 
   return (
@@ -45,11 +50,11 @@ function App() {
       </header>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}> <TextAreaPanel text={"Source"} language={sourceLanguage}
-                                                  setLanguages={setSourceLanguage}
+                                                  setLanguages={changeSourceLanguage}
                                                   value={sourceValue}
                                                   setValue={changeSourceValue}/></Grid>
         <Grid item xs={12} md={6}> <TextAreaPanel text={"Target"} language={targetLanguage}
-                                                  setLanguages={setTargetLanguage}
+                                                  setLanguages={changeTargetLanguage}
                                                   value={targetValue}
                                                   setValue={setTargetValue}/></Grid>
       </Grid>

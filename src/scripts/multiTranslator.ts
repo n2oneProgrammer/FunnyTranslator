@@ -1,13 +1,18 @@
 import Languages from "./languages";
 
 class MultiTranslator {
-
+  json2string(json:any){
+    let result = "";
+    json[0].forEach((row:any)=>result+=row[0]);
+    return result;
+  }
   async translate(srcLang: Languages, tarLang: Languages, text: string):Promise<string> {
     let url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + srcLang + '&tl=' + tarLang + '&dt=t&q=' + encodeURI(text);
     let res = await fetch(url);
     let json = await res.json();
-    console.log(json[0][0][0]);
-    return json[0][0][0];
+    let result = this.json2string(json);
+    console.log(result)
+    return result;
   }
 
   async randomTranslate(srcLang: Languages, text: string) {
