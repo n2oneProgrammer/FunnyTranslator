@@ -1,6 +1,8 @@
 import Languages from "./languages";
 
 class MultiTranslator {
+  private activeTranslation: number = 0;
+
   json2string(json: any) {
     let result = "";
     json[0].forEach((row: any) => result += row[0]);
@@ -27,14 +29,18 @@ class MultiTranslator {
   }
 
   async randomPath(srcLang: Languages, tarLang: Languages, text: string, countLang: number = 10, changeProgress: (v1: number) => void) {
+    let translationId = Date.now();
+    this.activeTranslation = translationId;
     let lang = srcLang;
     let t = text;
     for (let i = 0; i < countLang; i++) {
+      if(translationId !== this.activeTranslation) return "";
       let result = await this.randomTranslate(lang, t);
       lang = result.lang;
       t = result.text;
       changeProgress((i + 1) / countLang * 100);
     }
+    this.activeTranslation = 0;
     return this.translate(lang, tarLang, t);
   }
 }
