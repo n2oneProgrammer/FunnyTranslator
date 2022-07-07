@@ -7,6 +7,7 @@ import Languages from "./scripts/languages";
 import multiTranslator from "./scripts/multiTranslator";
 import BottomBar from "./components/BottomBar";
 import settings from "./scripts/settings";
+import PathTable from "./components/PathTable";
 
 let delayDebounceFn: any = 0;
 
@@ -70,6 +71,7 @@ function App() {
         /></Grid>
       </Grid>
       <BottomBar onTranslateButtonClick={() => translate(sourceLanguage, targetLanguage, sourceValue)}/>
+      <PathTable />
     </Container>
   );
 }

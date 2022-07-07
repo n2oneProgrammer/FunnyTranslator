@@ -43,6 +43,7 @@ function BottomBar({onTranslateButtonClick}: Props) {
         display: "flex",
         alignItems: "flex-end"
       }}>
+
         <Button variant="contained"
                 style={{
                   marginRight: 20,
