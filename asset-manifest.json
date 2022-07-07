@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/FunnyTranslator/static/css/main.89242662.css",
-    "main.js": "/FunnyTranslator/static/js/main.6c2173e7.js",
+    "main.js": "/FunnyTranslator/static/js/main.a830acff.js",
     "index.html": "/FunnyTranslator/index.html",
     "main.89242662.css.map": "/FunnyTranslator/static/css/main.89242662.css.map",
-    "main.6c2173e7.js.map": "/FunnyTranslator/static/js/main.6c2173e7.js.map"
+    "main.a830acff.js.map": "/FunnyTranslator/static/js/main.a830acff.js.map"
   },
   "entrypoints": [
     "static/css/main.89242662.css",
-    "static/js/main.6c2173e7.js"
+    "static/js/main.a830acff.js"
   ]
 }
