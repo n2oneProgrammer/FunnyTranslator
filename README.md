@@ -2,9 +2,9 @@
 # Funny Translator
 
 It is a simple translator website using translations through different languages.
-Website use API Google Translate.
+Website uses API Google Translate.
 
-Translator is deploy [here](https://n2oneprogrammer.github.io/FunnyTranslator/)
+Translator is deployed [here](https://n2oneprogrammer.github.io/FunnyTranslator/)
 
 
 
